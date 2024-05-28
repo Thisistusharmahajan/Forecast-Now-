@@ -1,0 +1,67 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('weather2.jpg');  /* Add your background image here */
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2em;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #333;
+}
+
+.search {
+    margin-bottom: 1em;
+}
+
+input {
+    padding: 0.5em;
+    font-size: 1em;
+    margin-right: 0.5em;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 0.5em 1em;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.weather {
+    margin-top: 1em;
+}
+
+.weather p, .weather h2 {
+    margin: 0.5em 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+#weatherIcon {
+    width: 100px;
+    height: 100px;
+}

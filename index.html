@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+</head>
+<body>
+    <div class="container">
+        <h1>Forecast Now</h1>
+        <div class="search">
+            <input type="text" id="cityInput" placeholder="Enter city name">
+            <button>Get Weather update</button>
+        </div>
+        <div class="weather">
+            <h2 id="cityName"></h2>
+            <img id="weatherIcon" src="" alt="Weather Icon" style="display: none;">
+            <p id="description"></p>
+            <p id="temperature"></p>
+            <p id="humidity"></p>
+            <p id="wind"></p>
+            <p id="fetchTime"></p>
+            <p id="currentTime"></p>
+        </div>
+    </div>
+</body>
+<script>
+const apiKey = 'da163a5ea102a0c3335b4050b629284f';  // Replace with your OpenWeatherMap API key
+let city = '';
+
+// Function to get weather data
+async function getWeather() {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('City not found or invalid API key');
+        }
+        const data = await response.json();
+        displayWeather(data);
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+// Function to display weather data
+function displayWeather(data) {
+    const cityName = document.getElementById('cityName');
+    const description = document.getElementById('description');
+    const temperature = document.getElementById('temperature');
+    const humidity = document.getElementById('humidity');
+    const wind = document.getElementById('wind');
+    const fetchTime = document.getElementById('fetchTime');
+    const currentTime = document.getElementById('currentTime');
+    const weatherIcon = document.getElementById('weatherIcon');
+
+    const now = new Date();
+    const fetchTimeString = `Data fetched at: ${now.toLocaleTimeString()}`;
+    const currentTimeString = `Current time: ${new Date().toLocaleTimeString()}`;
+
+    cityName.textContent = data.name;
+    description.textContent = data.weather[0].description;
+    temperature.textContent = `Temperature: ${data.main.temp} °C`;
+    humidity.textContent = `Humidity: ${data.main.humidity} %`;
+    wind.textContent = `Wind Speed: ${data.wind.speed} m/s`;
+    fetchTime.textContent = fetchTimeString;
+    currentTime.textContent = currentTimeString;
+
+    const iconCode = data.weather[0].icon;
+    const iconUrl = `http://openweathermap.org/img/wn/${iconCode}@2x.png`;
+    weatherIcon.src = iconUrl;
+    weatherIcon.style.display = 'block';
+
+    console.log(fetchTimeString);
+    console.log(currentTimeString);
+}
+
+// Function to start fetching weather data at intervals
+function startWeatherUpdates() {
+    city = document.getElementById('cityInput').value;
+    if (!city) {
+        alert('Please enter a city name');
+        return;
+    }
+    getWeather();  // Fetch data immediately
+    setInterval(getWeather, 1000);  // Fetch data every 60 seconds (60000 ms)
+}
+
+// Event listener for the button click
+document.querySelector('button').addEventListener('click', startWeatherUpdates);
+
+</script>
+</html>
