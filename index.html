@@ -86,7 +86,9 @@ function startWeatherUpdates() {
         return;
     }
     getWeather();  // Fetch data immediately
-    setInterval(getWeather, 1000);  // Fetch data every 60 seconds (60000 ms)
+    if (response.ok) {
+        setInterval(getWeather, 1000); 
+        } // Fetch data every 60 seconds (60000 ms)
 }
 
 // Event listener for the button click
